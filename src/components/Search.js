@@ -12,8 +12,9 @@ function Search(props) {
     }
 
     return (
-        <div>
+        <div className="search">
             <input 
+            className="search-input"
             type="text" 
             value={keyword} 
             onChange={handleOnChange}>

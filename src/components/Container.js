@@ -1,52 +1,72 @@
-import React, { useState, useEffect } from 'react';
-import Axios from 'axios'
+import React, { useState } from 'react';
 import Search from './Search'
+import ProfileList from './ProfileList'
+import RepositoryList from './RepositoryList'
+import ProfileDetails from './ProfileDetails'
 
 
 function Container() {
-    const [repos, setRepos] = useState([])
     const [keyword, setKeyword] = useState([])
-    useEffect(() => {
-        async function getRepos() {
-            try {
-                const response = await Axios.get(`https://api.github.com/search/repositories?q=${keyword}`)
-                setRepos(getTopRepos(response.data.items || []))
-            } catch (error) {
-            }
-        }
-        getRepos()
-    }, [keyword]);
+    const [userRepoToggle, setUserRepoToggle] = useState("repos")
+    const [userProfile, setUserProfile] = useState({})
 
-    const getTopRepos = (repos) => {
-        let topRepos = []
-        for (let i = 0; i < 10 && i < repos.length; i++) {
-            topRepos.push(repos[i])
-        }
-        return topRepos;
+
+
+    const handleSeeProfile = (user) => {
+        setUserRepoToggle("developerProfile")
+        setUserProfile(user)
     }
-
-    const getReposDiv = () => {
-        let repoDiv = repos && repos.map((repo, index) => {
-            return (<div key={index}>
-                <a href={repo.html_url}>{repo.name}</a>
-            </div>)
-        })
-        return repoDiv
-    }
-
     const handleSearchKeyword = (keyword) => {
         setKeyword(keyword)
+        console.log(keyword)
+    }
+    const toggleUserRepo = (searchBy) => {
+        setUserRepoToggle(searchBy)
     }
     return (
         <div className="container">
-            {keyword}
-            <div className="search">
-                <Search
-                    handleSearchKeyword={handleSearchKeyword}
-                />
-
+            <div className="logo">gitgems</div>
+            <div>
+                <h6>Welcome</h6>
             </div>
-            {getReposDiv()}
+            <div className="list-landing">
+                <div className="search">
+                    <Search
+                        handleSearchKeyword={handleSearchKeyword}
+                    />
+                </div>
+                <div>
+                    <button onClick={() => { toggleUserRepo("repos") }}>
+                        Repos
+                    </button>
+                    <button onClick={() => { toggleUserRepo("developers") }}>
+                        Developers
+                    </button>
+                </div>
+
+                {userRepoToggle === "repos" &&
+                    <div className="list-container">
+                        <RepositoryList
+                            keyword={keyword}
+                        />
+
+                    </div>}
+                {userRepoToggle === "developers" &&
+                    <div className="list-container">
+                        <ProfileList
+                            handleSeeProfile={handleSeeProfile}
+                            keyword={keyword}
+                        />
+
+                    </div>}
+                {userRepoToggle === "developerProfile" &&
+                    <div className="list-container">
+                        <ProfileDetails
+                            user={userProfile}
+                        />
+
+                    </div>}
+            </div>
         </div >
     );
 }
