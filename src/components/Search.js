@@ -19,8 +19,8 @@ function Search(props) {
             value={keyword} 
             onChange={handleOnChange}>
             </input>
-            <button onClick={handleOnClick}>
-                Search
+            <button className="search-button" onClick={handleOnClick}>
+            ✨Get Gems
             </button>
         </div>
     );

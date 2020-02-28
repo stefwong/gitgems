@@ -9,7 +9,11 @@ Search for your next coding solution or inspiration.
 
 ### Component Hierarchy
 
-Container | Search | Repo | User
+https://i.imgur.com/fazRdhM.png
+
+### Wireframe
+
+https://i.imgur.com/xILUexV.png
 
 ## API
 
@@ -18,10 +22,11 @@ https://api.github.com/
 
 ### MVP
 
-Search and find Github repositories
+Search and find Github repositories or for a github profile
 
 ### Post MVP
 
+Profile Details
 Sorting, animated effects
 
 ### SWOT Analysis
